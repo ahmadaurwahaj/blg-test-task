@@ -28,8 +28,8 @@ export class ChatgptService {
   async queryWithSearch(query: string): Promise<GroundedResponse> {
     const response = await this.client.responses.create({
       model: 'gpt-4o-mini',
-      tools: [{ type: 'web_search_preview' }],
-      input: query,
+      tools: [{ type: 'web_search_preview', search_context_size: 'high' }],
+      input: `${query}\n\nPlease cite specific sources for your recommendations.`,
     });
 
     let text = '';
