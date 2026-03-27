@@ -41,7 +41,7 @@ export class ChatgptService {
         for (const block of item.content) {
           if (block.type === 'output_text') {
             text = block.text;
-            for (const annotation of block.annotations) {
+            for (const annotation of block.annotations ?? []) {
               if (
                 annotation.type === 'url_citation' &&
                 !seenUrls.has(annotation.url)
@@ -65,6 +65,7 @@ export class ChatgptService {
       }
     }
 
+    this.logger.debug(`ChatGPT citations extracted: ${citations.length}`);
     return { text, citations };
   }
 
